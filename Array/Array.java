@@ -1,74 +1,72 @@
 package Array;
 
 public class Array{
-    private final int size;
-    private int index = 0;
+    private int size;
     private Object[] elements;
+    private int count;
+    private int length;
 
     public Array(int fixedSize){
         this.size = fixedSize;
         this.elements = new Object[this.size];
+        this.count = 0;
+        this.length = this.elements.length;
     }
 
     public boolean isEmpty(){
-        return (this.index == 0);
+        return (this.count == 0);
     }
 
-    public void add(Object element){
-        if (isEmpty()) {
-            this.elements[index] = element;
-            this.index++;
-        }
-
-        if (this.index == this.elements.length - 1)
-           System.out.println("Can not add more elements because Array is full.");
-        else {
-            this.elements[index] = element;
-            this.index++;
-        }
+    public int size(){
+        return this.count;
     }
 
-    public void addAtIndex(int index, Object element){
-        if (!isEmpty()) {
-            if (index >= 0 && index < this.elements.length) {
-                this.elements[index] = element;
-                this.index++;
-            } else
-                System.out.println("Array index out of range");
-        } else
-            System.out.println("Can not add more elements because Array is full");
-    }
-
-    public void remove(){
-        if (!isEmpty()) {
-            this.elements[this.index] = null;
-            this.index--;
-        } else
-            System.out.println("Can not remove elements because Array is empty");
-    }
-
-    public void removeAtIndex(int index) {
-        if (!isEmpty()) {
-            if (index >= 0 && index < this.elements.length) {
-                for (int i = index; i < this.elements.length - 1; i++)
-                    this.elements[i] = this.elements[i + 1];
-
-                this.index--;
-            }
+    public void add(int index, Object o){
+        if (index >= 0 && index < length) {
+            this.elements[index] = o;
+            this.count++;
         } else {
-            System.out.println("Can not remove elements because Array is empty");
+            throw new IndexOutOfBoundsException();
         }
     }
 
-    public void printElements(){
-        if (!isEmpty()) {
-            System.out.println("Printing ArrayElements:");
+    private int findElement(Object[] arr, Object o){
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == o)
+                return i;
+        }
 
-            for (Object i : this.elements)
-                System.out.print(i + " ");
+        return -1;
+    }
 
-            System.out.println();
-        } else
-            System.out.println("Can not print elements because Array is empty.");
+    public Object get(int index){
+        if (index >= 0 && index < length)
+            return this.elements[index];
+        else
+            System.out.println("Element not found");
+
+        return -1;
+    }
+
+    public void delete(Object o) {
+        int index = findElement(this.elements, o);
+
+        if (index == -1) {
+            System.out.println("Element not found");
+            return;
+        }
+
+        for (; index < length - 1; index++)
+            this.elements[index] = this.elements[index + 1];
+
+        this.elements[index] = null;
+        this.count--;
+    }
+
+    public void print(){
+        for (Object o : this.elements)
+            System.out.print(o + " ");
+
+        System.out.println();
     }
 }
