@@ -1,7 +1,7 @@
 # Array
 
 Array is a data structure consisting of collection of same elements, each array element is identified by its index.  
-In Java, Array is an object. To access array length we use, ```array.length``` property. 
+In Java, Array is an object. To access array length we use, ```array.length``` property.  
 It can cause ```IndexOutOfBoundsException()``` if we try to add a value if an array if full. 
 
 ### Best use for
