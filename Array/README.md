@@ -1,12 +1,16 @@
 # Array
 
-Array is a data structure consisting of collection of same elements, each array element is identified by its index. 
-To access array length we use, ```array.length``` property.
+Array is a data structure consisting of collection of same elements, each array element is identified by its index.  
+In Java, Array is an object. To access array length we use, ```array.length``` property. 
 It can cause ```IndexOutOfBoundsException()``` if we try to add a value if an array if full. 
+
+### Best use for
+
+Excessive read, as time complexity of read is always O(1);
 
 ### Advantages
 
-1. We can get value of an element if we know it's index.
+1. We can get value of an element in constant time if we know it's index.
 2. We can represent multiple values by using single variable.
 
 ### Disadvantages
