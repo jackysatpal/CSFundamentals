@@ -12,7 +12,7 @@ Will my program be able to solve a large practical input?
 
 With respect to the input size, how does your algorithm grows?
 
-Time Complexity is often measured in terms of:
+Time Complexity is often measured in terms of: 
 Big Oh(O): worst case scenario
 Big Omegha: best case scenario
 Big Theta: average case scenario
@@ -22,7 +22,8 @@ We analyze time complexity for 2 reasons:
 2. Worst case scenario
 
 
-Some of the input types and common factors that are scalling:
+Some of the input types and common factors that are scalling: 
+
 Input | Common factor that is scalling
 --- | ---
 Integer | Magnitude of number
