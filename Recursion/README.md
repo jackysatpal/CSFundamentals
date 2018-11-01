@@ -1,16 +1,16 @@
 ## Recursion
 
-Recursion is the method of solving problem that involes breaking of a problem into smaller subproblem untill you get to a small enough problem that it can be solved trivally. 
+* Recursion is the method of solving problem that involes breaking of a problem into smaller subproblem untill you get to a small enough problem that it can be solved trivally. 
+
+* There are some problems which can be solved using Recursion only. For example, Tower of Hanoi can be solved recursively only. Some problems are easy when solved using Recursion. For example, Tree algorithms are easy when done by Recursion. 
+
+* One of the common mistakes in Recursion is forgetting about the base case and forget about calling function recursively. Thus we get the StackOverflow errors.
 
 ### Three laws of Recursion
 
 1. A recursive algorithm must have a base case.
 2. A recursive algorithm must change its state and move toward the base case. 
 3. A recursive algorithm must call itself, recursively.
-
-* There are some problems which can be solved using Recursion only. For example, Tower of Hanoi can be solved recursively only. Some problems are easy when solved using Recursion. For example, Tree algorithms are easy when done by Recursion. 
-
-* One of the common mistakes in Recursion is forgetting about the base case and forget about calling function recursively. Thus we get the StackOverflow errors.
 
 ### Examples
 
