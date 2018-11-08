@@ -2,11 +2,11 @@ package SinglyLinkedList;
 
 public class Node<T> {
     private T data;
-    private Node<T> nextReference;
+    private Node<T> next;
 
     public Node(T data) {
         setData(data);
-        this.nextReference = null;
+        setNext(null);
     }
 
     public void setData(T data) {
@@ -17,11 +17,11 @@ public class Node<T> {
         return this.data;
     }
 
-    public Node<T> getNextReference() {
-        return this.nextReference;
+    public Node<T> getNext() {
+        return this.next;
     }
 
-    public void setNextReference(Node<T> nextReference) {
-        this.nextReference = nextReference;
+    public void setNext(Node<T> next) {
+        this.next = next;
     }
 }

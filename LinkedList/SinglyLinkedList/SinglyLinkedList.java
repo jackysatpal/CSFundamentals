@@ -1,210 +1,233 @@
 package SinglyLinkedList;
 
-import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<T> implements ListInterface<T> {
     private Node<T> head;
-    private int countNodes;
+    private static int countNodes;
 
     public SinglyLinkedList() {
         this.head = null;
-        this.countNodes = 0;
+        SinglyLinkedList.countNodes = 0;
     }
 
-    @Override
+    private void incrementSize() {
+        SinglyLinkedList.countNodes++;
+    }
+
+    private void decrementSize() {
+        SinglyLinkedList.countNodes--;
+    }
+
+    private void isIndexOutOfRange(int index) {
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private void isListEmpty() {
+        if (this.head == null) {
+            throw new NoSuchElementException();
+        }
+    }
+
+    private Node<T> getTailReference() {
+        Node<T> tail = this.head;
+
+        while (tail.getNext() != null) {
+            tail = tail.getNext();
+        }
+
+        return tail;
+    }
+
     public void clear() {
         this.head = null;
-        this.countNodes = 0;
+        SinglyLinkedList.countNodes = 0;
     }
 
-    @Override
     public void addFirst(T element) {
-          Node<T> newNode = new Node<>(element);
-          newNode.setNextReference(head);
-          head = newNode;
-          countNodes++;
+          Node<T> node = new Node<>(element);
+          node.setNext(this.head);
+          this.head = node;
+
+          incrementSize();
     }
 
-    @Override
     public void addLast(T element) {
-        Node<T> newNode = new Node<T>(element);
-        Node<T> temp = head;
+        Node<T> node = new Node<>(element);
+        Node<T> tail = getTailReference();
+        tail.setNext(node);
 
-        while (temp.getNextReference() != null) {
-            temp = temp.getNextReference();
-        }
-
-        temp.setNextReference(newNode);
-        countNodes++;
+        incrementSize();
     }
 
-    @Override
     public boolean add(T element) {
-        Node<T> newNode = new Node<T>(element);
-        Node<T> temp = head;
-
-        if (head == null) {
-            head = newNode;
-            countNodes++;
+        if (this.head == null) {
+            addFirst(element);
+            return true;
+        } else {
+            addLast(element);
             return true;
         }
-
-        while (temp.getNextReference() != null) {
-            temp = temp.getNextReference();
-        }
-
-        temp.setNextReference(newNode);
-        countNodes++;
-        return true;
     }
 
-    @Override
     public void add(int index, T element) {
-        int count = 0;
-        Node<T> temp = head;
-        Node<T> newNode = new Node<T>(element);
+        isIndexOutOfRange(index);
 
-        while (temp != null && count != (index - 1)) {
-            temp = temp.getNextReference();
-            count++;
+        if (index == 1) {
+            addFirst(element);
+            return;
         }
 
-        newNode.setNextReference(temp.getNextReference());
-        temp.setNextReference(newNode);
-        countNodes++;
+        int counter = 0;
+        Node<T> current = this.head;
+        Node<T> node = new Node<>(element);
+
+        while (counter != (index - 1)) {
+            current = current.getNext();
+            counter++;
+        }
+
+        node.setNext(current.getNext());
+        current.setNext(node);
+        incrementSize();
     }
 
-    @Override
-    //doubt in this method. return type of T
     public T get(int index) {
-        int count = 0;
-        int size = size();
-        Node<T> temp = head;
-        T data = temp.getData();
+        isIndexOutOfRange(index);
 
-        while(index < size && temp != null) {
-            if (count == index) {
-                data = temp.getData();
+        int counter = 1;
+        Node<T> current = this.head;
+        T data = current.getData();
+
+        while(current.getNext() != null) {
+            if (counter == index) {
+                data = current.getData();
                 break;
             }
 
-            count++;
-            temp = temp.getNextReference();
+            counter++;
+            current = current.getNext();
         }
 
         return data;
     }
 
-    @Override
     public T getFirst() {
-        return head.getData();
+        isListEmpty();
+        return this.head.getData();
     }
 
-    @Override
     public T getLast() {
-        Node<T> temp = head;
+        isListEmpty();
 
-        while (temp.getNextReference() != null) {
-            temp = temp.getNextReference();
-        }
-
-        return temp.getData();
+        Node<T> tail = getTailReference();
+        return tail.getData();
     }
 
-    @Override
     public int size() {
-        return this.countNodes;
+        return SinglyLinkedList.countNodes;
     }
 
-    @Override
     public T removeFirst() {
-        T data = head.getData();
-        head = head.getNextReference();
-        countNodes--;
+        isListEmpty();
+
+        T data = this.head.getData();
+        this.head = head.getNext();
+        decrementSize();
+
         return data;
     }
 
-    @Override
     public T removeLast() {
+        isListEmpty();
+
         T data;
-        Node<T> temp = head;
+        Node<T> tail = this.head;
         int size = size();
-        int count = 1;
+        int counter = 1;
 
-        while (count != size - 1) {
-            count++;
-            temp = temp.getNextReference();
+        while (counter != size - 1) {
+            counter++;
+            tail = tail.getNext();
         }
 
-        data = temp.getNextReference().getData();
-        temp.setNextReference(null);
-        countNodes--;
+        data = tail.getNext().getData();
+        tail.setNext(null);
+        decrementSize();
+
         return data;
     }
 
-    @Override
     public T remove(int index) {
-        int count = 0;
-        Node<T> temp = head;
+        isIndexOutOfRange(index);
+
+        int counter = 0;
+        Node<T> current = this.head;
         T data;
 
-        if (index == (size() - 1)) {
-            return removeLast();
+        while (counter != (index - 1)) {
+            counter++;
+            current = current.getNext();
         }
 
-        while (count != (index - 1)) {
-            count++;
-            temp = temp.getNextReference();
-        }
+        data = current.getNext().getData();
+        current.setNext(current.getNext().getNext());
+        decrementSize();
 
-        data = temp.getNextReference().getData();
-        temp.setNextReference(temp.getNextReference().getNextReference());
-        countNodes--;
         return data;
     }
 
-    @Override
     public T set(int index, T element) {
-        int count = 0;
-        Node<T> temp = head;
+        isIndexOutOfRange(index);
+
+        int counter = 0;
+        Node<T> current = this.head;
         T data;
 
-        while (count != index) {
-            count++;
-            temp = temp.getNextReference();
+        while (counter != index) {
+            counter++;
+            current = current.getNext();
         }
 
-        data = temp.getData();
-        temp.setData(element);
+        data = current.getData();
+        current.setData(element);
+
         return data;
     }
 
-    @Override
     public boolean contains(Object e) {
-        Node<T> temp = head;
+        Node<T> current = this.head;
 
-        while (temp != null) {
-            if (temp.getData() == e || temp.getData().equals(e)) {
+        while (current.getNext() != null) {
+            if (current.getData() == e || current.getData().equals(e)) {
                 return true;
             }
 
-            temp = temp.getNextReference();
+            current = current.getNext();
         }
 
         return false;
     }
 
-    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        Node<T> temp = head;
+        Node<T> current = this.head;
 
-        while(temp != null) {
-            sb.append(temp.getData());
-            sb.append(" ");
-            temp = temp.getNextReference();
+        System.out.print("head --> ");
+
+        while(current != null) {
+            sb.append(current.getData());
+
+            if (current.getNext() != null) {
+                sb.append(" --> ");
+            }
+
+            current = current.getNext();
         }
 
         return sb.toString();
     }
+
 }

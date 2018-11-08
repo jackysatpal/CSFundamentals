@@ -1,18 +1,18 @@
 package SinglyLinkedList;
 
 interface ListInterface<T> {
-    void clear();
-    void addFirst(T element);
-    void addLast(T element);
-    boolean add(T element);
-    void add(int index, T element);
-    T get(int index);
-    T getFirst();
-    T getLast();
-    int size();
-    T removeFirst();
-    T removeLast();
-    T remove(int index);
-    T set(int index, T element);
-    boolean contains(Object o);
+    public void clear();
+    public void addFirst(T element);
+    public void addLast(T element);
+    public boolean add(T element);
+    public void add(int index, T element);
+    public T get(int index);
+    public T getFirst();
+    public T getLast();
+    public int size();
+    public T removeFirst();
+    public T removeLast();
+    public T remove(int index);
+    public T set(int index, T element);
+    public boolean contains(Object o);
 }
