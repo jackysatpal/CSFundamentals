@@ -1,12 +1,12 @@
-# Array
+## Array
 
-Array is a data structure consisting of collection of same elements, each array element is identified by its index.  
-In Java, Array is an object. To access array length we use, ```array.length``` property.  
-It can cause ```IndexOutOfBoundsException()``` if we try to add a value if an array if full. 
+Array is a static data structure consisting of collection of same elements, each array element is identified by its index. Array is also known for its random access property. In Java, Array is an object. To access array length we use, ```array.length``` property. It can cause ```IndexOutOfBoundsException()``` if we try to add a value if the array if full. 
 
-### Best use for
+The problem with array is that if we want to add a new value to a particular index then we might have to shift all it's index to the right. Similarly if we want to remove a value then we might have to shift all it's index to the left. Due to this, insertion and deletion is difficult on Array. 
 
-Excessive read, as time complexity of read is always O(1);
+### Best used for
+
+Excessive read (because of random access) as time complexity of read operation is always O(1);
 
 ### Advantages
 
