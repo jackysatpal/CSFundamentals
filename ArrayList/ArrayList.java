@@ -2,39 +2,71 @@ package ArrayList;
 
 import java.util.Arrays;
 
-public class ArrayList {
+public class ArrayList<E> {
     private static final int DEFAULT_CAPACITY = 10;
-    private Object[] elements;
+    private E[] elements;
     private int count = 0;
 
     public ArrayList(){
-        this.elements = new Object[this.DEFAULT_CAPACITY];
+        this.elements = (E[]) new Object[ArrayList.DEFAULT_CAPACITY];
     }
 
-    public void add(Object element) {
-        if (this.count == this.elements.length) {
-            ensureCapacity();
-        }
-
-        this.elements[count] = element;
+    private void incrementSize() {
         this.count++;
     }
 
-    public void add(int index, Object element) {
-        if (this.count == this.elements.length) {
-            ensureCapacity();
-        }
-
-        this.elements[index] = element;
-        this.count++;
+    private void decrementSize() {
+        this.count--;
     }
 
-    public void set(int index, Object element) {
-        if (index >= 0 && index < this.elements.length) {
-            this.elements[index] = element;
-        } else {
+    private void isIndexOutOfRange(int index) {
+        if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
         }
+    }
+
+    private void hasArrayReachedCapacity() {
+        int size = size();
+        int length = this.elements.length;
+
+        if (size >= length) {
+            ensureCapacity();
+        }
+    }
+
+    public boolean add(E element) {
+        hasArrayReachedCapacity();
+
+        this.elements[count] = element;
+        incrementSize();
+
+        return true;
+    }
+
+    public E add(int index, E element) {
+        isIndexOutOfRange(index);
+        incrementSize();
+        hasArrayReachedCapacity();
+
+        int counter = size();
+
+        while(counter != index) {
+            this.elements[counter] = this.elements[counter - 1];
+            counter--;
+        }
+
+        E temp = this.elements[index];
+        this.elements[index] = element;
+
+        return temp;
+    }
+
+    public E set(int index, E element) {
+        isIndexOutOfRange(index);
+        E oldElement = this.elements[index];
+        this.elements[index] = element;
+
+        return oldElement;
     }
 
     public void ensureCapacity() {
@@ -51,7 +83,7 @@ public class ArrayList {
     }
 
     public void clear() {
-        this.elements = new Object[0];
+        this.elements = (E[]) new Object[0];
         this.count = 0;
     }
 
@@ -65,29 +97,39 @@ public class ArrayList {
         return false;
     }
 
-    public Object get(int index) {
-        if (index >= 0 && index < this.elements.length) {
-            return this.elements[index];
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
+    public E get(int index) {
+        isIndexOutOfRange(index);
+        return this.elements[index];
     }
 
-    public void remove(int index) {
-        if (index >= 0 && index < this.elements.length) {
-            for (int i = index; i < this.elements.length - 1; i++) {
-                this.elements[i] = this.elements[i + 1];
+    public E remove(int index) {
+        isIndexOutOfRange(index);
+
+        E element = this.elements[index];
+        for (int i = index; i < this.elements.length - 1; i++) {
+            this.elements[i] = this.elements[i + 1];
+        }
+
+        decrementSize();
+        return element;
+    }
+
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "ArrayList is Empty";
+        }
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < this.elements.length; i++) {
+            if (this.elements[i] != null) {
+                sb.append(this.elements[i]);
+                sb.append(" ");
             }
-            this.count--;
-        } else {
-            throw new IndexOutOfBoundsException();
         }
-    }
 
-    public void printElements() {
-        for (Object i : this.elements) {
-            System.out.print(i + " ");
-        }
         System.out.println();
+
+        return sb.toString();
     }
 }
