@@ -1,8 +1,8 @@
-# ArrayList
+## ArrayList
 
 ArrayList is an object which can increase or decrease its size dynamically. Underneath we are using a static array only. When the arrayList reaches its max capacity then a new array is created with a new size and content of the old array is copied into new array. Once this is done then we add one value to the new array. This process is repeated if the size is full and we have to add more elements. Hence it is known as Dynamically Array or Resizeable Array. 
 
-### Best use for
+### Best used for
 
 Excessive read, as time complexity of read is always O(1);
 
@@ -36,3 +36,7 @@ Following are few methods:
 5. ensureCapacity(int minCapacity) --> This increases the capacity of the ArrayList
 6. size() --> return the number of elements in the ArrayList
 7. get(int index) --> returns the element at the specified position
+
+### Complexity
+
+Average time of add operation is O(1) but in the worst case time complexity of add operation is O(n).
