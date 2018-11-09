@@ -1,16 +1,20 @@
 package Array;
 
-public class Array{
-    private int size;
-    private Object[] elements;
+public class Array<E> {
+    private E[] elements;
     private int count;
-    private int length;
 
-    public Array(int fixedSize){
-        this.size = fixedSize;
-        this.elements = new Object[this.size];
+    public Array() {
+        this.elements = (E[]) new Object[10];
         this.count = 0;
-        this.length = this.elements.length;
+    }
+
+    private void incrementSize() {
+        this.count++;
+    }
+
+    private void decrementSize() {
+        this.count--;
     }
 
     public boolean isEmpty(){
@@ -21,52 +25,68 @@ public class Array{
         return this.count;
     }
 
-    public void add(int index, Object o){
-        if (index >= 0 && index < length) {
-            this.elements[index] = o;
-            this.count++;
-        } else {
+    private void isArrayFull() {
+        if (size() == this.elements.length) {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    private int findElement(Object[] arr, Object o){
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == o)
-                return i;
+    private void isIndexValid(int index) {
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    public void add(E element) {
+        isArrayFull();
+        this.elements[this.count] = element;
+        incrementSize();
+    }
+
+    public E get(int index) {
+        isIndexValid(index);
+        return this.elements[index];
+    }
+
+    public boolean contains(Object o) {
+        for (int i = 0; i < this.elements.length; i++) {
+            if (this.elements[i] == o  || this.elements[i].equals(o)) {
+                return true;
+            }
         }
 
-        return -1;
+        return false;
     }
 
-    public Object get(int index){
-        if (index >= 0 && index < length)
-            return this.elements[index];
-        else
-            System.out.println("Element not found");
+    public E remove(int index) {
+        isIndexValid(index);
+        E data = this.elements[this.count];
 
-        return -1;
-    }
-
-    public void delete(Object o) {
-        int index = findElement(this.elements, o);
-
-        if (index == -1) {
-            System.out.println("Element not found");
-            return;
+        for (int i = index; i < this.elements.length - 1; i++) {
+            this.elements[i] = this.elements[i + 1];
         }
 
-        for (; index < length - 1; index++)
-            this.elements[index] = this.elements[index + 1];
+        decrementSize();
 
-        this.elements[index] = null;
-        this.count--;
+        return data;
     }
 
-    public void print(){
-        for (Object o : this.elements)
-            System.out.print(o + " ");
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "Array is Empty";
+        }
+        StringBuffer sb = new StringBuffer();
 
+        for (Object i : this.elements) {
+            if (i != null) {
+                sb.append(i);
+                sb.append(" ");
+            }
+        }
         System.out.println();
+
+        return sb.toString();
     }
+
 }
