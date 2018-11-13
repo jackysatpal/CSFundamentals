@@ -4,7 +4,7 @@ A binary tree is a tree data structure in which each node can have at most two c
 
 ### Example:
 
-![Binary Tree Example](./images/BinaryTreeExample.PNG)
+![Binary Tree Example](../images/BinaryTreeExample.PNG)
 
 ### Types of Binary Tree
 
