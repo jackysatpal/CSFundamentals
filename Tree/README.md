@@ -4,7 +4,7 @@ A tree is a collection of nodes linked together to simulate hierarchical data. A
 
 ### Example:
 
-![Tree Example](./images/treeExample.JPG)
+![Tree Example](../images/treeExample.JPG)
 
 In the above example, following observations can be made:
 
